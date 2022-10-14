@@ -6,6 +6,8 @@ typedef struct node {
     struct node* next;
 } node;
 
+void free_list(node* head);
+
 
 int main() {
     
@@ -37,15 +39,21 @@ int main() {
     }
 
     //print list 
-
     p = head;
     while ( p != NULL) {
-
-        printf("%d\n", p->val);
+        printf(p==head?"%d":(p->next==NULL?", %d\n":", %d"), p->val);
         p = p->next;
-
     }
 
     return 0;
 
+}
+
+void free_list(node* head) {
+
+    while(head!=NULL){
+        node* prev=head;
+        head=head->next;
+        free(prev);
+    }
 }
