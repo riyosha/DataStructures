@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct node {
     int val;
@@ -11,7 +12,7 @@ node* create_node(int input);
 node* insert_node(node* root, node* temp);
 void swap(int* a, int* b);
 void print_bst_InOrder(node* root);
-void search_node(node* root, int input);
+bool search_node(node* root, int input);
 void delete_node(node* root, int input);
 void free_bst(node* root);
 
@@ -45,12 +46,15 @@ int main () {
     int m;
     printf("\n\nPlease enter the value you want to search for: ");
     scanf("%i", &m);
-    search_node(root, m);
+    if (search_node(root, m)) {printf("\n%i is present in the BST", m);}
+    else if (!search_node(root, m)) {printf("%i is not present in the BST", m);}
 
     int d;
     printf("\n\nPlease enter value you want to delete: ");
     scanf("%i",&d);
     delete_node(root, d);
+    printf("\nModified BST in order: ");
+    printf("\n");
     print_bst_InOrder(root);
 
     free_bst(root);
@@ -95,9 +99,9 @@ void print_bst_InOrder(node* root) {
 }
 
 //function for searching for a particular value in the BST  
-void search_node(node* root, int input) {
-    if(!root) {printf("%i is not present in the BST", input);}
-    else if(input == root->val) {printf("\n%i is present in the BST", input);}
+bool search_node(node* root, int input) {
+    if(!root) {return false;}
+    else if(input == root->val) {return true;}
     else if(input>root->val) {search_node(root->right, input);}
     else if(input<root->val) {search_node(root->left, input);}
 }
@@ -107,23 +111,25 @@ void delete_node(node* root, int input) {
     node* temp = NULL;
     node* reinsert = NULL;
     if(!root) {printf("\n%i is not present in the BST\n", input);}
-    else if(input == root->right->val) {
-        temp = root->right;
-        root->right = root->right->right;
-        reinsert = temp->left;
-        free(temp);
-        if (reinsert) {root = insert_node(root, reinsert);}
-        printf("%i has been deleted!\n", input);
-    } else if(input == root->left->val) {
-        temp = root->left;
-        root->left = root->left->left;
-        reinsert = temp->right;
-        free(temp);
-        if (reinsert) {root = insert_node(root, reinsert);}
-        printf("%i has been deleted!\n", input);
-    } else if (input>root->val) {delete_node(root->right, input);}
-    else if (input<root->val) {delete_node(root->left, input);} 
-    else {printf("%i is not present in BST", input);}
+    if (search_node(root, input)) {
+        if(input == root->right->val) {
+            temp = root->right;
+            root->right = root->right->right;
+            reinsert = temp->left;
+            free(temp);
+            if (reinsert) {root = insert_node(root, reinsert);}
+            printf("%i has been deleted!\n", input);
+        } else if(input == root->left->val) {
+            temp = root->left;
+            root->left = root->left->left;
+            reinsert = temp->right;
+            free(temp);
+            if (reinsert) {root = insert_node(root, reinsert);}
+            printf("%i has been deleted!\n", input);
+        } else if (input>root->val) {delete_node(root->right, input);}
+        else if (input<root->val) {delete_node(root->left, input);} 
+    } else {printf("\n%i is not present in the BST\n", input);}
+    
     
 }
 //function to free all nodes in a bst 
