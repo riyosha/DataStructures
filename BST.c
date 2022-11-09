@@ -112,18 +112,16 @@ void delete_node(node* root, int input) {
     node* reinsert = NULL;
     if(!root) {printf("\n%i is not present in the BST\n", input);}
     if (search_node(root, input)) {
-        if(input == root->right->val) {
+        if(root->right!=NULL&&input == root->right->val) {
             temp = root->right;
             root->right = root->right->right;
             reinsert = temp->left;
-            free(temp);
             if (reinsert) {root = insert_node(root, reinsert);}
             printf("%i has been deleted!\n", input);
-        } else if(input == root->left->val) {
+        } else if(root->left!=NULL&&input == root->left->val) {
             temp = root->left;
             root->left = root->left->left;
             reinsert = temp->right;
-            free(temp);
             if (reinsert) {root = insert_node(root, reinsert);}
             printf("%i has been deleted!\n", input);
         } else if (input>root->val) {delete_node(root->right, input);}
