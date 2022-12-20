@@ -139,15 +139,17 @@ node* random_LinkedList(int size) {
     return head;
 }
 
+
+
 void sortedInsert(node* new_node)
 {
-    /* Special case for the head end */
+    //head case
     if (!sorted||sorted->val>=new_node->val) {
         new_node->next = sorted;
         sorted = new_node;
     } else {
         node* current = sorted;
-        // Locate the node before the point of insertion
+        //locates the node before the point of insertion
         while (current->next&&current->next->val<new_node->val) {current = current->next;}
         new_node->next = current->next;
         current->next = new_node;
@@ -157,13 +159,13 @@ void sortedInsert(node* new_node)
 void InsertionSort_LinkedList(node* head) {
     
     node* current = head;
-    //traverse given linked list and insert every node to sorted linked list
+    //traverses given linked list and insert every node to sorted linked list
     while (current) {
         node* next = current->next; //store next for next iteration
         sortedInsert(current);//insert current in sorted linked list
         current = next; //update current
     }
-    //update head to point to sorted linked list
+    //updates head to point to sorted linked list
     head = sorted;
 }
 
