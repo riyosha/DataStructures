@@ -1,5 +1,10 @@
 /*
-This final project implements a phonebook using tries.
+This repository contains all the data structures I coded up during my Data Structures course.
+*/
+
+
+/*
+The final project implements a phonebook using tries.
 Each Trie Node stores:
     - int LeafNode - gives information about reaching end of the word
     - an array of 26 pointers to Trie Nodes
