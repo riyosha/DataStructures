@@ -1,5 +1,5 @@
 /*
-This repository contains all the data structures I coded up during my Data Structures course.
+This repository contains all the data structures I coded up during my Data Structures course and over the following semesters on my own.
 */
 
 
